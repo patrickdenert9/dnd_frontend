@@ -21,7 +21,7 @@ const SignIn = () => {
 
         const jwt = await response.text();
         localStorage.setItem("jwt",jwt);               //save jwt to localstorage
-        console.log(localStorage.getItem("jwt"));
+        
         username.current.value = "";
         password.current.value = "";
     }

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {useParams} from "react-router-dom";
 import Table from '@mui/material/Table';
-import { TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Button, Card, CardContent, Stack, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 
 const Character = () => {
     const {id} = useParams();               // get char id from path for fetch
     const [character, setCharacter] = useState();
     const [load, setLoad] = useState(false);
-    const [bonus, setBonus] = useState([]);
+  
     const [skills, setSkills] = useState([]);
     const [prof, setProf] = useState([]);
+
 
     function createSkills() {
         const str = Math.floor((character.str - 10)/2) // calc bonus for each skill
@@ -18,6 +19,9 @@ const Character = () => {
         const int = Math.floor((character.int - 10)/2) 
         const wis = Math.floor((character.wis - 10)/2) 
         const cha = Math.floor((character.cha - 10)/2) 
+
+        const bonus = Math.ceil(character.level/4) + 1
+        console.log(bonus)
 
         const skillProf = [
             {
@@ -90,15 +94,26 @@ const Character = () => {
             }
         ]
         //console.log(character.skills)
-        
+        prof.forEach((skill) => {
+            
+            skillProf.forEach((s) => {
+                if(skill === s.skill){
+                    s.prof += bonus;
+                    console.log(s.prof);
+                    console.log(skill);
+                    
+                }
+            })
+        })
 
         setSkills(skillProf)
     }
 
-    function updateCharacter(char) {
+    function updateCharacter(char,prof) {
         if(char){
             setLoad(true)
             setCharacter(char)
+            setProf(prof);
             createSkills();
         }
     }
@@ -118,7 +133,7 @@ const Character = () => {
             const json = await response.json();
             console.log(json);
             
-            updateCharacter(json.character);
+            updateCharacter(json.character, json.skills);
             
             
             console.log(character);
@@ -134,6 +149,45 @@ const Character = () => {
             <p>
                 {JSON.stringify(character)}
             </p>
+            <Stack direction={"horizontal"}>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                    <CardContent>
+                        <Typography variant='h6' sx={{ margin: 'auto'}}>Strength</Typography>
+                        <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.str}</Typography>
+                    </CardContent>
+                </Card>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                    <CardContent>
+                        <Typography variant='h6' sx={{ margin: 'auto'}}>Dexterity</Typography>
+                        <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.dex}</Typography>
+                    </CardContent>
+                </Card>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                    <CardContent>
+                        <Typography variant='h6' sx={{ margin: 'auto'}}>Constitution</Typography>
+                        <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.con}</Typography>
+                    </CardContent>
+                </Card>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                    <CardContent>
+                        <Typography variant='h6' sx={{ margin: 'auto'}}>Intelligence</Typography>
+                        <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.int}</Typography>
+                    </CardContent>
+                </Card>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                    <CardContent>
+                        <Typography variant='h6' sx={{ margin: 'auto'}}>Wisdom</Typography>
+                        <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.wis}</Typography>
+                    </CardContent>
+                </Card>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                    <CardContent>
+                        <Typography variant='h6' sx={{ margin: 'auto'}}>Charisma</Typography>
+                        <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.cha}</Typography>
+                    </CardContent>
+                </Card>
+            </Stack>
+            
             <Table sx={{ maxWidth: 500 }} size='small'>
                 <TableHead>
                     <TableRow>

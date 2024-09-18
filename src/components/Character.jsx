@@ -3,6 +3,8 @@ import {useParams} from "react-router-dom";
 import Table from '@mui/material/Table';
 import { Button, Card, CardContent, Stack, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 
+import DiceRoleMenu from './DiceRoleMenu';
+
 const Character = () => {
     const {id} = useParams();               // get char id from path for fetch
     const [character, setCharacter] = useState();
@@ -118,6 +120,9 @@ const Character = () => {
         }
     }
    
+    function handleAbilityRoll(e, skill) {
+        e.preventDefault();
+    }
 
     useEffect(() => {
 
@@ -150,40 +155,46 @@ const Character = () => {
                 {JSON.stringify(character)}
             </p>
             <Stack direction={"horizontal"}>
-                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
+                <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}} onContextMenu={(e) => handleAbilityRoll(e, character.str)}>
                     <CardContent>
                         <Typography variant='h6' sx={{ margin: 'auto'}}>Strength</Typography>
                         <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.str}</Typography>
+                        <DiceRoleMenu bonus={Math.floor((character.str - 10)/2)}/>
                     </CardContent>
                 </Card>
                 <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
                     <CardContent>
                         <Typography variant='h6' sx={{ margin: 'auto'}}>Dexterity</Typography>
                         <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.dex}</Typography>
+                        <DiceRoleMenu bonus={Math.floor((character.dex - 10)/2)}/>
                     </CardContent>
                 </Card>
                 <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
                     <CardContent>
                         <Typography variant='h6' sx={{ margin: 'auto'}}>Constitution</Typography>
                         <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.con}</Typography>
+                        <DiceRoleMenu bonus={Math.floor((character.con - 10)/2)}/>
                     </CardContent>
                 </Card>
                 <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
                     <CardContent>
                         <Typography variant='h6' sx={{ margin: 'auto'}}>Intelligence</Typography>
                         <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.int}</Typography>
+                        <DiceRoleMenu bonus={Math.floor((character.int - 10)/2)}/>
                     </CardContent>
                 </Card>
                 <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
                     <CardContent>
                         <Typography variant='h6' sx={{ margin: 'auto'}}>Wisdom</Typography>
                         <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.wis}</Typography>
+                        <DiceRoleMenu bonus={Math.floor((character.wis - 10)/2)}/>
                     </CardContent>
                 </Card>
                 <Card raised={true} sx={{ margin: "auto", maxWidth: "125px"}}>
                     <CardContent>
                         <Typography variant='h6' sx={{ margin: 'auto'}}>Charisma</Typography>
                         <Typography variant='h6' sx={{ margin: 'auto', justifyContent: "center"}}>{character.cha}</Typography>
+                        <DiceRoleMenu bonus={Math.floor((character.cha - 10)/2)}/>
                     </CardContent>
                 </Card>
             </Stack>

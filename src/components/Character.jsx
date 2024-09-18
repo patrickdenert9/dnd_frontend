@@ -6,6 +6,7 @@ import { Button, Card, CardContent, Stack, TableBody, TableCell, TableHead, Tabl
 import DiceRoleMenu from './DiceRoleMenu';
 import DiceResult from './DiceResult';
 import AbilityScores from './AbilityScores';
+import SkillsTable from './SkillsTable';
 
 const Character = () => {
     const {id} = useParams();               // get char id from path for fetch
@@ -122,8 +123,6 @@ const Character = () => {
         }
     }
    
-    
-
     useEffect(() => {
 
         const fetchCharacters = async () => {
@@ -146,6 +145,7 @@ const Character = () => {
 
         fetchCharacters().catch(console.error);
     },[load]);
+
   return (
     <div>
        { load ? (
@@ -154,26 +154,9 @@ const Character = () => {
             <p>
                 {JSON.stringify(character)}
             </p>
-            <AbilityScores character={character}/>
-            
-            <Table sx={{ maxWidth: 500 }} size='small'>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Skill</TableCell>
-                        <TableCell>Bonus</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {skills.map((skill) => (
-                        <TableRow key={skill.skill}>
-                            <TableCell>{skill.skill}</TableCell>
-                            <TableCell>+{skill.prof}</TableCell>
-                            <TableCell><DiceRoleMenu bonus={skill.prof}/></TableCell>
-                            
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+            <AbilityScores character={character}/>                                {/* Add ability Scores to character, pass character as prop */}
+
+            <SkillsTable skills={skills}/>                                        {/* Add Skills to character, pass skills as prop */}
             <DiceResult />
         </div>
         

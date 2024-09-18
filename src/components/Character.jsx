@@ -7,6 +7,7 @@ import DiceRoleMenu from './DiceRoleMenu';
 import DiceResult from './DiceResult';
 import AbilityScores from './AbilityScores';
 import SkillsTable from './SkillsTable';
+import HealthBar from './HealthBar';
 
 const Character = () => {
     const {id} = useParams();               // get char id from path for fetch
@@ -155,7 +156,7 @@ const Character = () => {
                 {JSON.stringify(character)}
             </p>
             <AbilityScores character={character}/>                                {/* Add ability Scores to character, pass character as prop */}
-
+            <HealthBar character={character}/>
             <SkillsTable skills={skills}/>                                        {/* Add Skills to character, pass skills as prop */}
             <DiceResult />
         </div>

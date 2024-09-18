@@ -4,6 +4,7 @@ import Table from '@mui/material/Table';
 import { Button, Card, CardContent, Stack, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 
 import DiceRoleMenu from './DiceRoleMenu';
+import DiceResult from './DiceResult';
 
 const Character = () => {
     const {id} = useParams();               // get char id from path for fetch
@@ -211,10 +212,13 @@ const Character = () => {
                         <TableRow key={skill.skill}>
                             <TableCell>{skill.skill}</TableCell>
                             <TableCell>+{skill.prof}</TableCell>
+                            <TableCell><DiceRoleMenu bonus={skill.prof}/></TableCell>
+                            
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
+            <DiceResult />
         </div>
         
        ) : (<p>Loading</p>)}

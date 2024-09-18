@@ -1,9 +1,13 @@
 import { Button, Menu, MenuItem } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from './AppContext';
 
 const DiceRoleMenu = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const {diceResult, updateDiceResult} = useContext(AppContext);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -14,14 +18,17 @@ const DiceRoleMenu = (props) => {
   const handleAdvantage = () => {                                                   // roll 2 dice and return higher roll (advantage)
     const result1 = Math.floor(Math.random() * 20 + 1) + props.bonus;               // roll d20
     const result2 = Math.floor(Math.random() * 20 + 1) + props.bonus;               // roll d20
-    console.log(result1, result2);
-    console.log(Math.max(result1,result2));                                         // get advantage roll result
+
+    const result = Math.max(result1,result2);                                       // get advantage roll result
+                                                       
+    updateDiceResult(result);                                                       // update dice result globally
     setAnchorEl(null);
   };
 
   const handleFlat = () => {                                                        // roll 1 die and return roll 
     const result = Math.floor(Math.random() * 20 + 1) + props.bonus;               // roll d20
-    console.log(result);
+   
+    updateDiceResult(result);                                                       // update dice result globally
     setAnchorEl(null);
   };
 
@@ -29,8 +36,9 @@ const DiceRoleMenu = (props) => {
   const handleDisadvantage = () => {                                                   // roll 2 dice and return higher roll (advantage)
     const result1 = Math.floor(Math.random() * 20 + 1) + props.bonus;               // roll d20
     const result2 = Math.floor(Math.random() * 20 + 1) + props.bonus;               // roll d20
-    console.log(result1, result2);
-    console.log(Math.min(result1,result2));                                         // get advantage roll result
+    const result = Math.min(result1,result2);                                       // get disadvantage roll result
+                                        
+    updateDiceResult(result);                                                       // update dice result globally
     setAnchorEl(null);
   };
 
